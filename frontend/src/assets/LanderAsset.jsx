@@ -137,10 +137,10 @@ export default function LanderAsset({
           {/* Ground surface illumination */}
           <pointLight
             position={[0, -0.8, 0]}
-            intensity={2.8}
-            distance={28}
-            color="#ff9922"
-            decay={2}
+            intensity={4.5}
+            distance={65}
+            color="#ffaa33"
+            decay={1.6}
           />
         </group>
       )}

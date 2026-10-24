@@ -560,18 +560,24 @@ function DedicatedCameraSystem({ targetX, targetZ, transitioning, orbitRef, hmRe
     if (descentMode && !touchdownComplete) {
       if (orbitRef.current) orbitRef.current.enabled = false;
 
-      const altNorm = Math.max(0, Math.min(1, descentTelemetry.altitude / 200));
+      const altNorm = Math.max(0, Math.min(1, descentTelemetry.altitude / 65));
       const groundY = sampleHeightWorld(hmRef?.current, targetX, targetZ);
-      const landerY = groundY + Math.max(0, descentTelemetry.altitude * 0.35);
+      const currentAlt = Math.max(0, descentTelemetry.altitude);
+      const landerY = groundY + currentAlt;
 
-      const camX = targetX + 12 + altNorm * 24;
-      const camY = landerY + 4.8 + altNorm * 20;
-      const camZ = targetZ + 16 + altNorm * 28;
+      // Smooth horizontal offset & distance scaled with altitude
+      const dist = 16 + altNorm * 12; // 16m at touchdown -> 28m at 65m
+      const heightAboveLander = 4.5 + altNorm * 9; // 4.5m above lander at touchdown -> 13.5m above at 65m
+
+      const camX = targetX + dist * 0.707;
+      const camZ = targetZ + dist * 0.707;
+      const camY = landerY + heightAboveLander;
 
       const camTargetPos = new THREE.Vector3(camX, camY, camZ);
-      const camLookTarget = new THREE.Vector3(targetX, landerY * 0.65 + groundY * 0.35, targetZ);
+      // Look directly at the lander and ground area below
+      const camLookTarget = new THREE.Vector3(targetX, landerY * 0.65 + groundY * 0.35 + 1.2, targetZ);
 
-      camera.position.lerp(camTargetPos, 0.08);
+      camera.position.lerp(camTargetPos, 0.1);
       camera.lookAt(camLookTarget);
       return;
     }
@@ -818,7 +824,7 @@ function Scene3D({
       </points>
 
       {/* Deep Space Ambient: Faint earthshine & rim scatter */}
-      <ambientLight intensity={0.025} color="#0a0d14" />
+      <ambientLight intensity={0.16} color="#182232" />
 
       {/* Primary Low-Angle Lunar Sunlight (~8.5° Grazing Polar Elevation) */}
       <directionalLight

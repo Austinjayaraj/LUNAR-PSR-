@@ -344,7 +344,7 @@ const useStore = create((set, get) => ({
       descentMode: true,
       descentPhase: 'APPROACH',
       missionScene: 'LANDING',
-      descentTelemetry: { altitude: 500, vVel: -10, hVel: 0.5, targetError: 15, time: 0 },
+      descentTelemetry: { altitude: 65, vVel: -8, hVel: 0.5, targetError: 8.5, time: 0 },
     });
 
     get()._markTimeline('LANDING', 'active');
