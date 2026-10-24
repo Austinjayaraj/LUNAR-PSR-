@@ -19,7 +19,7 @@ export default function MoonAsset({ onMoonClick, isTransitioning = false }) {
 
   const { albedoTex, normalTex } = useMemo(() => {
     // Calibrated LROC albedo (Maria #2A2A2A - Highlands #8A8A8A - Rays #BCBCBC)
-    const albedo = loadTextureCached('/textures/moon_albedo_calibrated.jpg', true);
+    const albedo = loadTextureCached('/textures/moon_albedo_2k.jpg', true);
     if (albedo) {
       albedo.wrapS = THREE.RepeatWrapping;
       albedo.wrapT = THREE.ClampToEdgeWrapping;
@@ -29,7 +29,7 @@ export default function MoonAsset({ onMoonClick, isTransitioning = false }) {
     }
 
     // Smooth LOLA laser altimeter normal map
-    const normal = loadTextureCached('/textures/moon_normal_smooth.png', false);
+    const normal = loadTextureCached('/textures/moon_normal_2k.jpg', false);
     if (normal) {
       normal.wrapS = THREE.RepeatWrapping;
       normal.wrapT = THREE.ClampToEdgeWrapping;

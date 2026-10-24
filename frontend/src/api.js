@@ -12,7 +12,7 @@ export async function checkHealth() {
 
 export async function getSystemStatus() {
   try {
-    const res = await fetch(`${API_BASE}/status`, { method: 'GET' });
+    const res = await fetch(`${API_BASE}/system-status`, { method: 'GET' });
     if (!res.ok) throw new Error(`Status check failed: ${res.status}`);
     return await res.json();
   } catch (err) {

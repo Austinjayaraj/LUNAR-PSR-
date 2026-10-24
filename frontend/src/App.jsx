@@ -15,6 +15,7 @@ import MissionScene        from './components/MissionScene';
 import MissionHUD          from './components/MissionHUD';
 import DescentSimulation   from './components/DescentSimulation';
 import RecordingController from './components/RecordingController';
+import ErrorBoundary       from './components/ErrorBoundary';
 import './App.css';
 
 export default function App() {
@@ -30,18 +31,20 @@ export default function App() {
 
   return (
     <div className="app">
-      {/* Scene 0–1: Cinematic Moon */}
-      <SpaceScene />
+      <ErrorBoundary>
+        {/* Scene 0–1: Cinematic Moon */}
+        <SpaceScene />
 
-      {/* Scene 2–10: Mission flow */}
-      <MissionScene />
+        {/* Scene 2–10: Mission flow */}
+        <MissionScene />
 
-      {/* Persistent minimal HUD (hidden on landing page) */}
-      <MissionHUD />
+        {/* Persistent minimal HUD (hidden on landing page) */}
+        <MissionHUD />
 
-      {/* Headless controllers */}
-      <DescentSimulation />
-      <RecordingController />
+        {/* Headless controllers */}
+        <DescentSimulation />
+        <RecordingController />
+      </ErrorBoundary>
     </div>
   );
 }

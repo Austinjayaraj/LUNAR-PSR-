@@ -264,9 +264,20 @@ export default function SpaceScene() {
 
       {/* Restrained aerospace typography overlay */}
       <div className="cinematic-overlay" aria-live="polite">
-        <div className={`cinematic-text-block${stage === 'TITLE' ? ' visible' : ''}`}>
+        <div className={`cinematic-text-block visible`}>
           <h1 className="cinematic-title">LUNAR PSR TERMINAL</h1>
           <p className="cinematic-subtitle">AI-ASSISTED LUNAR SOUTH POLE EXPLORATION</p>
+          <button
+            className="cinematic-enter-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              triggerMissionTransition();
+            }}
+            title="Launch Mission Control"
+          >
+            <span>LAUNCH MISSION CONTROL</span>
+            <span className="cinematic-btn-arrow">→</span>
+          </button>
         </div>
 
         <div className={`cinematic-status-block${stage === 'INITIALIZING' ? ' visible' : ''}`}>
