@@ -1,0 +1,3 @@
+-r requirements.txt
+# PDF text assertions and layout validation only
+pypdf>=5,<7

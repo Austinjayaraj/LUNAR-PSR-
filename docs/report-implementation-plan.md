@@ -1,0 +1,14 @@
+# Automated analysis reports: repository inspection and plan
+
+The working frontend is `lunar-ui/` (React 19, Vite, Zustand, Three.js). `src/api.js` calls synchronous `POST /pipeline`; `src/store.js` retains results in browser memory. `AnalysisViewport.jsx` owns the unified result map and candidate selection. Terrain, science panels and recording are separate existing flows.
+
+`api/main.py` loads the epoch-57 LunarUNet checkpoint and uses PyTorch inference, OpenCV morphology/Otsu thresholding and connected components for hazard candidates and complementary safe-region masks. The real response includes `mission_id`, `timestamp`, `input_info`, `restoration`, `hazard_analysis`, `landing_zones`, `selected_lz`, `image_stats` (restored image), `terrain_metrics`, `processing_timeline`, `model_info`, `scientific_limitations` and `pipeline_telemetry`. Images are PNG base64. Candidate clearance and area are pixels, scores are heuristic. Timings for hazard analysis, candidate extraction and scoring overlap; they must not be added. Some legacy hazard configuration fields do not describe the V2 implementation; reports use actual telemetry instead.
+
+No analysis database, user authentication, report service, n8n integration, root backend requirements file or frontend test runner exists. The environment file currently configures Gemini only. Evaluation JSON and methodology establish restoration metrics on 300 held-out images and hazard evaluation against a derived photometric reference.
+
+1. Persist the completed backend response and original image in a small stdlib SQLite store; retain the existing response and add report metadata and an opaque analysis access token. Store source metadata separately from processed grayscale metadata.
+2. Add a standalone report service and shared section model for escaped HTML and ReportLab PDF. Snapshot historical evaluation separately; do not run inference for reporting.
+3. Add report generation/status/download/preview routes plus authenticated n8n record and render routes. Use durable jobs, atomic claims and selection-aware idempotency. Protect public report access with opaque capabilities because no user accounts exist.
+4. Default to automatic local background generation. Enable n8n orchestration through environment configuration; ship an inactive credential-free importable workflow. Bound webhook and workflow waits, preserve analysis on report failures, and support explicit retries.
+5. Add one polling report panel under analysis results, use deployment-configurable API addressing, and snapshot the user's actual selected candidate on manual generation.
+6. Test the real API/report contract using isolated fixtures, mocked webhook delivery and a real inference smoke run. Test frontend behavior and run production build. Render and inspect PDF pages. Document configuration, addressing, retention and live n8n verification.

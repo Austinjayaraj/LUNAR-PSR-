@@ -1,0 +1,188 @@
+{
+  "experiment": "hazard_v2",
+  "checkpoint": "weights/lunar_unet_v2_best.pth",
+  "val_count": 200,
+  "ref_hazard_frac": 0.478,
+  "v1_baseline_val": {
+    "precision": 0.5277,
+    "recall": 0.9222,
+    "f1": 0.6713,
+    "iou": 0.5052
+  },
+  "operating_points": {
+    "conservative": {
+      "available": true,
+      "weight_config": "shadow_morph",
+      "weights": {
+        "shadow_40": 0.25,
+        "local_dark_31": 0.2,
+        "blackhat_11": 0.2,
+        "morph_grad_7": 0.2,
+        "tophat_11": 0.15
+      },
+      "threshold": 0.05,
+      "min_component": 0,
+      "validation_metrics": {
+        "precision": 0.5496,
+        "recall": 0.8637,
+        "f1": 0.6717,
+        "iou": 0.5057,
+        "accuracy": 0.5964,
+        "tp": 5411787,
+        "tn": 2405988,
+        "fp": 4435454,
+        "fn": 853971,
+        "pred_hazard_frac": 0.7513,
+        "ref_hazard_frac": 0.478
+      }
+    },
+    "balanced_f1": {
+      "available": true,
+      "weight_config": "multiscale_balanced",
+      "weights": {
+        "shadow_40": 0.18,
+        "local_dark_31": 0.12,
+        "canny_dil3_30_80": 0.1,
+        "canny_dil3_50_120": 0.08,
+        "sobel_k3": 0.1,
+        "laplacian": 0.07,
+        "blackhat_7": 0.1,
+        "blackhat_11": 0.1,
+        "morph_grad_7": 0.08,
+        "morph_grad_11": 0.07
+      },
+      "threshold": 0.075,
+      "min_component": 50,
+      "validation_metrics": {
+        "precision": 0.6393,
+        "recall": 0.7231,
+        "f1": 0.6786,
+        "iou": 0.5135,
+        "accuracy": 0.6726,
+        "tp": 4530605,
+        "tn": 4285052,
+        "fp": 2556390,
+        "fn": 1735153,
+        "pred_hazard_frac": 0.5575,
+        "ref_hazard_frac": 0.478
+      }
+    },
+    "balanced_iou": {
+      "available": true,
+      "weight_config": "multiscale_balanced",
+      "weights": {
+        "shadow_40": 0.18,
+        "local_dark_31": 0.12,
+        "canny_dil3_30_80": 0.1,
+        "canny_dil3_50_120": 0.08,
+        "sobel_k3": 0.1,
+        "laplacian": 0.07,
+        "blackhat_7": 0.1,
+        "blackhat_11": 0.1,
+        "morph_grad_7": 0.08,
+        "morph_grad_11": 0.07
+      },
+      "threshold": 0.075,
+      "min_component": 50,
+      "validation_metrics": {
+        "precision": 0.6393,
+        "recall": 0.7231,
+        "f1": 0.6786,
+        "iou": 0.5135,
+        "accuracy": 0.6726,
+        "tp": 4530605,
+        "tn": 4285052,
+        "fp": 2556390,
+        "fn": 1735153,
+        "pred_hazard_frac": 0.5575,
+        "ref_hazard_frac": 0.478
+      }
+    },
+    "precision_r80": {
+      "available": true,
+      "weight_config": "balanced",
+      "weights": {
+        "shadow_40": 0.2,
+        "local_dark_31": 0.1,
+        "canny_dil3_30_80": 0.15,
+        "sobel_k3": 0.15,
+        "laplacian": 0.1,
+        "blackhat_11": 0.15,
+        "tophat_11": 0.15
+      },
+      "threshold": 0.05,
+      "min_component": 50,
+      "validation_metrics": {
+        "precision": 0.5718,
+        "recall": 0.8187,
+        "f1": 0.6733,
+        "iou": 0.5075,
+        "accuracy": 0.6203,
+        "tp": 5129595,
+        "tn": 3000455,
+        "fp": 3840987,
+        "fn": 1136163,
+        "pred_hazard_frac": 0.6973,
+        "ref_hazard_frac": 0.478
+      }
+    },
+    "best_f1_r80": {
+      "available": true,
+      "weight_config": "balanced",
+      "weights": {
+        "shadow_40": 0.2,
+        "local_dark_31": 0.1,
+        "canny_dil3_30_80": 0.15,
+        "sobel_k3": 0.15,
+        "laplacian": 0.1,
+        "blackhat_11": 0.15,
+        "tophat_11": 0.15
+      },
+      "threshold": 0.05,
+      "min_component": 50,
+      "validation_metrics": {
+        "precision": 0.5718,
+        "recall": 0.8187,
+        "f1": 0.6733,
+        "iou": 0.5075,
+        "accuracy": 0.6203,
+        "tp": 5129595,
+        "tn": 3000455,
+        "fp": 3840987,
+        "fn": 1136163,
+        "pred_hazard_frac": 0.6973,
+        "ref_hazard_frac": 0.478
+      }
+    },
+    "best_f1_r85": {
+      "available": true,
+      "weight_config": "shadow_morph",
+      "weights": {
+        "shadow_40": 0.25,
+        "local_dark_31": 0.2,
+        "blackhat_11": 0.2,
+        "morph_grad_7": 0.2,
+        "tophat_11": 0.15
+      },
+      "threshold": 0.05,
+      "min_component": 50,
+      "validation_metrics": {
+        "precision": 0.5516,
+        "recall": 0.8607,
+        "f1": 0.6723,
+        "iou": 0.5064,
+        "accuracy": 0.5989,
+        "tp": 5392804,
+        "tn": 2457582,
+        "fp": 4383860,
+        "fn": 872954,
+        "pred_hazard_frac": 0.7513,
+        "ref_hazard_frac": 0.478
+      }
+    },
+    "best_f1_r90": {
+      "available": false,
+      "note": "No config meets R\u22650.90"
+    }
+  }
+}

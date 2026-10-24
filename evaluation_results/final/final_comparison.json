@@ -1,0 +1,131 @@
+{
+  "test_set_size": 300,
+  "baseline_checkpoint": "weights/lunar_unet_best.pth",
+  "improved_checkpoint": "weights/lunar_unet_v2_best.pth",
+  "hazard_config": {
+    "method": "multi",
+    "canny_low": 30,
+    "canny_high": 80,
+    "kernel": 11,
+    "iter": 3,
+    "sobel_thresh": 40,
+    "lap_thresh": 20,
+    "shadow_thresh": 50,
+    "tophat_thresh": 25,
+    "score_thresh": 0.25,
+    "w_canny": 0.25,
+    "w_sobel": 0.2,
+    "w_lap": 0.1,
+    "w_shadow": 0.25,
+    "w_tophat": 0.2,
+    "f1": 0.6713020734677301,
+    "iou": 0.5052330255528747,
+    "tp": 5778484,
+    "tn": 1669935,
+    "fp": 5171507,
+    "fn": 487274,
+    "accuracy": 0.568269271850586,
+    "precision": 0.5277158675290236,
+    "recall": 0.9222322343122732
+  },
+  "hazard_detection": {
+    "baseline": {
+      "accuracy": 56.6,
+      "precision": 59.41,
+      "recall": 27.62,
+      "f1": 37.71,
+      "iou": 23.24,
+      "tp": 2582953,
+      "tn": 8544772,
+      "fp": 1764643,
+      "fn": 6768432
+    },
+    "improved": {
+      "accuracy": 56.99,
+      "precision": 52.74,
+      "recall": 92.23,
+      "f1": 67.11,
+      "iou": 50.5,
+      "tp": 8624916,
+      "tn": 2580247,
+      "fp": 7729168,
+      "fn": 726469
+    }
+  },
+  "restoration": {
+    "baseline": {
+      "mae": {
+        "mean": 22.6008,
+        "std": 7.9886
+      },
+      "rmse": {
+        "mean": 27.6512,
+        "std": 7.7417
+      },
+      "r2": {
+        "mean": 0.0405,
+        "std": 0.5963
+      },
+      "psnr": {
+        "mean": 19.6185,
+        "std": 2.3416
+      },
+      "ssim": {
+        "mean": 0.3897,
+        "std": 0.0498
+      }
+    },
+    "improved": {
+      "mae": {
+        "mean": 7.6287,
+        "std": 1.1092
+      },
+      "rmse": {
+        "mean": 10.3748,
+        "std": 1.4135
+      },
+      "r2": {
+        "mean": 0.866,
+        "std": 0.0447
+      },
+      "psnr": {
+        "mean": 27.8855,
+        "std": 1.1221
+      },
+      "ssim": {
+        "mean": 0.7041,
+        "std": 0.0421
+      }
+    }
+  },
+  "efficiency": {
+    "parameters": 8559617,
+    "baseline_model_size_mb": 32.7,
+    "improved_model_size_mb": 32.7,
+    "mps_inference_baseline": {
+      "mean_ms": 97.31,
+      "std_ms": 4.52,
+      "min_ms": 89.52,
+      "max_ms": 104.63
+    },
+    "mps_inference_improved": {
+      "mean_ms": 100.13,
+      "std_ms": 4.72,
+      "min_ms": 91.88,
+      "max_ms": 108.96
+    },
+    "cpu_inference_baseline": {
+      "mean_ms": 861.11,
+      "std_ms": 24.0,
+      "min_ms": 832.07,
+      "max_ms": 907.19
+    },
+    "cpu_inference_improved": {
+      "mean_ms": 860.96,
+      "std_ms": 13.58,
+      "min_ms": 840.51,
+      "max_ms": 884.5
+    }
+  },
+  "reference_type": "SYNTHETIC (Derived Photometric Reference from 0.25m HR telemetry)"
+}

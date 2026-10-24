@@ -1,0 +1,58 @@
+# Environment and Secrets
+.env
+.env.local
+*.env
+
+# Python
+venv/
+.venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+*.egg-info/
+
+# Node & Frontend
+node_modules/
+frontend/node_modules/
+lunar-ui/node_modules/
+frontend/dist/
+lunar-ui/dist/
+.npm/
+.vite/
+.vite-temp/
+frontend/.vite/
+lunar-ui/.vite/
+
+# OS and Editors
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.vscode/
+.idea/
+
+# Storage and Runtime Temp
+storage/
+tmp/
+*.log
+output/
+
+# Datasets and Large Imagery
+data/*
+!data/README.md
+!data/.gitkeep
+
+# Model Checkpoints & Weights
+weights/*.pth
+weights/*.pt
+weights/*.onnx
+weights/*.h5
+weights/*.bin
+!weights/README.md
+!weights/training_history_v2.json

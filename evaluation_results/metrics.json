@@ -1,0 +1,73 @@
+{
+  "timestamp": "2026-10-06T06:44:08.529704Z",
+  "checkpoint": "weights/lunar_unet_best.pth",
+  "dataset_path": "data/processed_pairs",
+  "device": "MPS",
+  "total_dataset_samples": 1500,
+  "test_samples_count": 300,
+  "test_ratio": 0.2,
+  "seed": 42,
+  "restoration_metrics": {
+    "MAE": {
+      "mean": 22.6008,
+      "std": 7.9886,
+      "median": 20.2793,
+      "min": 11.4476,
+      "max": 48.1093
+    },
+    "RMSE": {
+      "mean": 27.6512,
+      "std": 7.7417,
+      "median": 25.8215,
+      "min": 15.4422,
+      "max": 50.5968
+    },
+    "R2": {
+      "mean": 0.0405,
+      "std": 0.5963,
+      "median": 0.2495,
+      "min": -3.6413,
+      "max": 0.6335
+    },
+    "PSNR": {
+      "mean": 19.6185,
+      "std": 2.3416,
+      "median": 19.8912,
+      "min": 14.0483,
+      "max": 24.3566
+    },
+    "SSIM": {
+      "mean": 0.3897,
+      "std": 0.0498,
+      "median": 0.4,
+      "min": 0.2007,
+      "max": 0.4781
+    }
+  },
+  "hazard_detection_metrics": {
+    "reference_type": "SYNTHETIC",
+    "reference_description": "Derived Photometric Reference Mask extracted from native 0.25m OHRC ground-truth telemetry using multi-scale Top-Hat/Black-Hat morphology, shadow thresholding, and morphological gradient (strictly independent from prediction pipeline's Canny detector). Not human ground truth.",
+    "mean_metrics": {
+      "accuracy": 0.566,
+      "precision": 0.5846,
+      "recall": 0.2738,
+      "f1": 0.3537,
+      "iou": 0.2204
+    },
+    "aggregate_confusion_matrix": {
+      "tp": 2582953,
+      "tn": 8544772,
+      "fp": 1764643,
+      "fn": 6768432,
+      "total_pixels": 19660800
+    }
+  },
+  "per_image_metrics_count": 300,
+  "visualizations_saved": [
+    "median_sample_353.png",
+    "worst_sample_1336.png",
+    "test_sample_15.png_15.png",
+    "test_sample_23.png_23.png",
+    "best_sample_1203.png"
+  ]
+}

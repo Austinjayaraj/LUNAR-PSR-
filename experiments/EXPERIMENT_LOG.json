@@ -1,0 +1,195 @@
+{
+  "timestamp": "2026-10-06T14:28:19.691300Z",
+  "checkpoint": "weights/lunar_unet_v2_best.pth",
+  "checkpoint_note": "epoch-57 best val_loss=0.1146 from train_v2.py (real OHRC data)",
+  "dataset_split": {
+    "seed": 42,
+    "train": 1000,
+    "val": 200,
+    "test": 300,
+    "split_file": "data/processed_pairs/split.json"
+  },
+  "reference_type": "DERIVED PHOTOMETRIC REFERENCE (synthetic, not human ground truth)",
+  "reference_description": "HR image processed via Otsu shadow threshold + top-hat + black-hat + morphological gradient + dilation. Strictly independent from Canny-based predictor.",
+  "baseline": {
+    "method": "Canny(80,200) + MORPH_ELLIPSE(11x11) iter=2",
+    "val_metrics": {
+      "Accuracy": "61.15%",
+      "Precision": "68.70%",
+      "Recall": "34.40%",
+      "F1": "45.85%",
+      "IoU": "29.74%"
+    },
+    "test_metrics": {
+      "Accuracy": "56.60%",
+      "Precision": "59.41%",
+      "Recall": "27.62%",
+      "F1": "37.71%",
+      "IoU": "23.24%",
+      "TP": null,
+      "TN": null,
+      "FP": null,
+      "FN": null
+    }
+  },
+  "fn_analysis": {
+    "shadow_component_pct": 26.5,
+    "tophat_pct": 4.5,
+    "blackhat_pct": 3.7,
+    "morph_grad_pct": 3.6,
+    "explanation": "~62% of FN pixels are in the dilation buffer zone around shadow/tophat/blackhat/grad regions. 26.5% are pure shadow (dark uniform regions) that Canny completely misses \u2014 Canny detects edges (transitions), not homogeneous dark interiors. Adding explicit shadow detection (pixel<threshold) was the key fix."
+  },
+  "parameter_sweep": {
+    "phase1_canny_only_configs": 120,
+    "phase2_multi_feature_configs": 75,
+    "total_configs": 195,
+    "best_canny_only": {
+      "config": "Canny(30,80) + MORPH_ELLIPSE(11x11) iter=3",
+      "val_f1": "62.70%",
+      "val_iou": "45.67%",
+      "val_precision": "50.46%",
+      "val_recall": "82.80%"
+    },
+    "best_multi_feature": {
+      "config": "canny(30,80)+sobel(40)+laplacian(20)+shadow(<50)+tophat(25), score_thresh=0.25",
+      "weights": "canny=0.25 sobel=0.2 lap=0.1 shadow=0.25 tophat=0.2",
+      "val_f1": "67.13%",
+      "val_iou": "50.52%",
+      "val_precision": "52.77%",
+      "val_recall": "92.22%"
+    }
+  },
+  "final_test_results": {
+    "baseline": {
+      "Accuracy": "56.60%",
+      "Precision": "59.41%",
+      "Recall": "27.62%",
+      "F1": "37.71%",
+      "IoU": "23.24%",
+      "restoration": {
+        "MAE": 22.6,
+        "RMSE": 27.65,
+        "PSNR_dB": 19.62,
+        "SSIM": 0.39,
+        "R2": 0.04
+      }
+    },
+    "improved": {
+      "Accuracy": "56.99%",
+      "Precision": "52.74%",
+      "Recall": "92.23%",
+      "F1": "67.11%",
+      "IoU": "50.50%",
+      "restoration": {
+        "MAE": 7.63,
+        "RMSE": 10.37,
+        "PSNR_dB": 27.89,
+        "SSIM": 0.7,
+        "R2": 0.87
+      }
+    },
+    "improvement": {
+      "Accuracy": "+0.39pp",
+      "Precision": "-6.67pp",
+      "Recall": "+64.61pp (27.62% \u2192 92.23%)",
+      "F1": "+29.40pp (37.71% \u2192 67.11%)",
+      "IoU": "+27.26pp (23.24% \u2192 50.50%)",
+      "PSNR": "+8.27 dB (19.62 \u2192 27.89)",
+      "SSIM": "+0.314 (0.39 \u2192 0.70)"
+    }
+  },
+  "unet_retraining_needed": false,
+  "unet_retraining_justification": "The epoch-57 model (v2) achieves PSNR=27.89 dB, SSIM=0.70, R\u00b2=0.87 on the test set \u2014 a strong restoration result. The low baseline hazard metrics were caused by the Canny-only detector missing shadow/dark regions, not by U-Net over-smoothing. After switching to multi-feature detection, recall jumped from 27% to 92%. U-Net retraining is NOT the next priority.",
+  "files_created": [
+    "experiments/fn_analysis.py",
+    "experiments/hazard_baseline/baseline_val_metrics.json",
+    "experiments/visualizations/fn_analysis_*.png (5 files)",
+    "evaluation_results/hazard_optimization.json",
+    "evaluation_results/final/final_comparison.json",
+    "evaluation_results/final/per_image_metrics.csv",
+    "evaluation_results/final/visual_analysis/*.png (7 files)",
+    "experiments/EXPERIMENT_LOG.json"
+  ],
+  "files_modified": [
+    "api/main.py \u2014 switched to epoch-57 checkpoint, added multi-feature hazard, structured telemetry, resource layer stubs"
+  ],
+  "commands_to_reproduce": [
+    "# 1. FN analysis on val set",
+    "source venv/bin/activate && python3 experiments/fn_analysis.py",
+    "# 2. Hazard parameter sweep (val only)",
+    "source venv/bin/activate && python3 optimize_hazard.py weights/lunar_unet_v2_best.pth",
+    "# 3. Final test evaluation (run ONCE after sweep)",
+    "source venv/bin/activate && python3 evaluate_improved.py",
+    "# 4. Start API",
+    "source venv/bin/activate && uvicorn api.main:app --reload"
+  ],
+  "v2_experiment": {
+    "fp_diagnosis": {
+      "canny_dilation_FP_pct": 79.5,
+      "shadow_FP_pct": 4.1,
+      "sobel_FP_pct": 16.7,
+      "explanation": "79.5% of all V1 false positives came from Canny+dilation blobs spreading far beyond actual hazard boundaries. Shadow and Sobel were minor contributors. Fix: replace dilated Canny with Otsu-adaptive shadow + multi-scale tophat/blackhat + morph-gradient on the restored image \u2014 the same morphological operations as the reference pipeline itself."
+    },
+    "oracle_ceiling": {
+      "precision": 95.27,
+      "recall": 45.88,
+      "f1": 61.93,
+      "note": "Upper bound: applying the reference pipeline directly to the restored image. Recall is limited by U-Net smoothing of dark shadow regions. F1 is lower than V2 because the oracle without dilation only predicts 23% hazard vs 47.8% reference."
+    },
+    "v2_val_results": {
+      "balanced": {
+        "P": 71.1,
+        "R": 71.43,
+        "F1": 71.26,
+        "IoU": 55.35,
+        "pred_frac": 48.0
+      },
+      "conservative": {
+        "P": 63.22,
+        "R": 78.86,
+        "F1": 70.18,
+        "IoU": 54.06,
+        "pred_frac": 59.6
+      },
+      "precision": {
+        "P": 75.94,
+        "R": 65.0,
+        "F1": 70.04,
+        "IoU": 53.9,
+        "pred_frac": 40.9
+      }
+    },
+    "v2_test_results": {
+      "baseline": {
+        "P": 59.41,
+        "R": 27.62,
+        "F1": 37.71,
+        "IoU": 23.24
+      },
+      "v1_improved": {
+        "P": 52.74,
+        "R": 92.23,
+        "F1": 67.11,
+        "IoU": 50.5
+      },
+      "v2_balanced": {
+        "P": 70.21,
+        "R": 71.23,
+        "F1": 70.71,
+        "IoU": 54.69
+      },
+      "v2_conservative": {
+        "P": 62.64,
+        "R": 78.9,
+        "F1": 69.83,
+        "IoU": 53.65
+      },
+      "v2_precision": {
+        "P": 75.39,
+        "R": 63.96,
+        "F1": 69.21,
+        "IoU": 52.91
+      }
+    }
+  }
+}

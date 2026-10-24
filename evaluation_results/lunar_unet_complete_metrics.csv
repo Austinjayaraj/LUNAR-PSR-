@@ -1,0 +1,24 @@
+Category,Metric,Value,Unit / Scale,Interpretation / Description
+Model Info,Model Name,LunarUNet,Text,Checkerboard-free deep residual U-Net
+Model Info,Checkpoint,weights/lunar_unet_v2_best.pth,Path,Trained weights
+Model Info,Epoch,57,Count,Best checkpoint epoch
+Model Info,Parameter Count,8559617,Weights,Total trainable parameters
+Model Info,Validation Loss,0.114629,Loss,Best composite val loss
+Dataset,Total Samples,1500,Pairs,Total LR/HR image pairs
+Dataset,Held-Out Test Samples,300,Pairs,20% deterministic test split (seed=42)
+Dataset,Evaluated Pixels,19660800,Pixels,300 test images × 256 × 256
+Primary Restoration,MAE,7.6287,"DN [0, 255]",Mean Absolute Error on 8-bit scale
+Primary Restoration,RMSE,10.3748,"DN [0, 255]",Root Mean Squared Error on 8-bit scale
+Primary Restoration,R²,0.866,"[-inf, 1.0]",Coefficient of determination (variance explained)
+Primary Restoration,PSNR,27.8855,dB,Peak Signal-to-Noise Ratio
+Primary Restoration,SSIM,0.7041,"[-1.0, 1.0]",Structural Similarity Index
+Secondary Thresholded,Threshold,0.5,"[0, 1]",Normalized pixel intensity threshold (127.5 DN)
+Secondary Thresholded,Accuracy,0.949,"[0, 1]",Overall thresholded pixel classification accuracy
+Secondary Thresholded,Precision,0.8701,"[0, 1]",TP / (TP + FP) for pixels >= 0.50
+Secondary Thresholded,Recall,0.8609,"[0, 1]",TP / (TP + FN) for pixels >= 0.50
+Secondary Thresholded,F1,0.8655,"[0, 1]",Harmonic mean of precision and recall
+Secondary Thresholded,ROC-AUC,0.9839,"[0, 1]",Area under ROC curve using continuous model scores
+Confusion Matrix,TP,3224458,Pixels,True Positives (Pred >= 0.50 & GT >= 0.50)
+Confusion Matrix,TN,15434220,Pixels,True Negatives (Pred < 0.50 & GT < 0.50)
+Confusion Matrix,FP,481209,Pixels,False Positives (Pred >= 0.50 & GT < 0.50)
+Confusion Matrix,FN,520913,Pixels,False Negatives (Pred < 0.50 & GT >= 0.50)

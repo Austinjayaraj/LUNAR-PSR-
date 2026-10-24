@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  /* Core palette */
+  --c-space:   #000005;
+  --c-void:    #020306;
+  --c-dark:    #060810;
+  --c-panel:   rgba(4, 6, 14, 0.92);
+  --c-border:  rgba(255, 255, 255, 0.07);
+  --c-border-bright: rgba(0, 240, 255, 0.2);
+
+  /* Text */
+  --c-text-1:  #f0f0f0;
+  --c-text-2:  #94a3b8;
+  --c-text-3:  #4a5568;
+  --c-text-dim: #2a3344;
+
+  /* Accent */
+  --c-cyan:    #00f0ff;
+  --c-cyan-dim: rgba(0, 240, 255, 0.12);
+  --c-amber:   #f59e0b;
+  --c-green:   #10b981;
+  --c-red:     #ef4444;
+
+  /* Font stacks */
+  --f-sans:  'Space Grotesk', -apple-system, sans-serif;
+  --f-mono:  'JetBrains Mono', 'Courier New', monospace;
+}
+
+html, body, #root {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--c-space);
+  color: var(--c-text-1);
+  font-family: var(--f-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Subtle CRT scanline overlay — very restrained */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.06) 2px,
+    rgba(0, 0, 0, 0.06) 3px
+  );
+  pointer-events: none;
+  z-index: 9000;
+  opacity: 0.5;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar       { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(0,240,255,0.15); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0,240,255,0.3); }
+
+.hidden { display: none !important; }
+.rotating { animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Monospace utility */
+.mono { font-family: var(--f-mono); }

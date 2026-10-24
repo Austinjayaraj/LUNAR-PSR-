@@ -1,0 +1,97 @@
+{
+  "test_set_size": 300,
+  "reference_type": "DERIVED PHOTOMETRIC REFERENCE (not human ground truth)",
+  "ref_hazard_frac_pct": 47.6,
+  "checkpoint_baseline": "weights/lunar_unet_best.pth",
+  "checkpoint_improved": "weights/lunar_unet_v2_best.pth (epoch 57, val_loss=0.1146)",
+  "hazard_configs": {
+    "baseline": "Canny(80,200)+MORPH_ELLIPSE(11x11)x2",
+    "v1_improved": "multi-feature: canny(30,80)+sobel+lap+shadow(50)+tophat, score>=0.25",
+    "v2_balanced": "oracle-core (Otsu-shadow+tophat(7)+blackhat(7)+tophat(11)+blackhat(11)+morph_grad) + buf(7x7,2) + mc=50",
+    "v2_conservative": "oracle-core(7+15) + buf(7x7,2) + mc=100",
+    "v2_precision": "oracle-core(7) + buf(9x9,2) + mc=100"
+  },
+  "hazard_detection": {
+    "baseline": {
+      "accuracy": 56.6,
+      "precision": 59.41,
+      "recall": 27.62,
+      "f1": 37.71,
+      "iou": 23.24,
+      "tp": 2582953,
+      "tn": 8544772,
+      "fp": 1764643,
+      "fn": 6768432,
+      "pred_hazard_frac": 22.1,
+      "ref_hazard_frac": 47.6
+    },
+    "v1_improved": {
+      "accuracy": 56.99,
+      "precision": 52.74,
+      "recall": 92.23,
+      "f1": 67.11,
+      "iou": 50.5,
+      "tp": 8624916,
+      "tn": 2580247,
+      "fp": 7729168,
+      "fn": 726469,
+      "pred_hazard_frac": 83.2,
+      "ref_hazard_frac": 47.6
+    },
+    "v2_balanced": {
+      "accuracy": 71.94,
+      "precision": 70.21,
+      "recall": 71.23,
+      "f1": 70.71,
+      "iou": 54.69,
+      "tp": 6660655,
+      "tn": 7482930,
+      "fp": 2826485,
+      "fn": 2690730,
+      "pred_hazard_frac": 48.3,
+      "ref_hazard_frac": 47.6
+    },
+    "v2_conservative": {
+      "accuracy": 67.58,
+      "precision": 62.64,
+      "recall": 78.9,
+      "f1": 69.83,
+      "iou": 53.65,
+      "tp": 7377791,
+      "tn": 5908687,
+      "fp": 4400728,
+      "fn": 1973594,
+      "pred_hazard_frac": 59.9,
+      "ref_hazard_frac": 47.6
+    },
+    "v2_precision": {
+      "accuracy": 72.93,
+      "precision": 75.39,
+      "recall": 63.96,
+      "f1": 69.21,
+      "iou": 52.91,
+      "tp": 5980710,
+      "tn": 8357488,
+      "fp": 1951927,
+      "fn": 3370675,
+      "pred_hazard_frac": 40.3,
+      "ref_hazard_frac": 47.6
+    }
+  },
+  "restoration": {
+    "baseline": {
+      "mae": 22.6008,
+      "rmse": 27.6512,
+      "r2": 0.0405,
+      "psnr": 19.6185,
+      "ssim": 0.3897
+    },
+    "epoch57": {
+      "mae": 7.6287,
+      "rmse": 10.3748,
+      "r2": 0.866,
+      "psnr": 27.8855,
+      "ssim": 0.7041
+    }
+  }
+}

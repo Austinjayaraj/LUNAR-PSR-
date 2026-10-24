@@ -1,0 +1,30 @@
+{
+  "checkpoint": "weights/lunar_unet_v2_best.pth",
+  "split": "validation",
+  "n_images": 200,
+  "method": "canny_baseline",
+  "canny_low": 80,
+  "canny_high": 200,
+  "kernel": 11,
+  "iterations": 2,
+  "accuracy": 61.15,
+  "precision": 68.7,
+  "recall": 34.4,
+  "f1": 45.85,
+  "iou": 29.74,
+  "tp": 2155679,
+  "tn": 5859228,
+  "fp": 982214,
+  "fn": 4110079,
+  "fn_decomposition": {
+    "shadow_pct": 26.5,
+    "tophat_pct": 4.5,
+    "blackhat_pct": 3.7,
+    "morph_grad_pct": 3.6,
+    "shadow_pixels": 1088096,
+    "tophat_pixels": 185526,
+    "blackhat_pixels": 151656,
+    "morph_grad_pixels": 148102
+  },
+  "diagnosis": "The baseline Canny detector misses dark shadow/crater-interior pixels because Canny detects EDGES (intensity transitions) not homogeneous dark regions. Shadow regions that are uniformly dark have no strong edge response and are entirely missed. Top-hat (bright protrusions) and black-hat (dark depressions) are partially captured at their boundaries but interiors are missed. Adding explicit dark-region detection should dramatically improve recall."
+}

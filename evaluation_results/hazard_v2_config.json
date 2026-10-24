@@ -1,0 +1,57 @@
+{
+  "checkpoint": "weights/lunar_unet_v2_best.pth",
+  "epoch": 57,
+  "val_loss": 0.1146,
+  "ref_hazard_frac_pct": 47.8,
+  "default_mode": "balanced",
+  "operating_points": {
+    "balanced": {
+      "method": "oracle_multiscale",
+      "tophat_small_kernel": 7,
+      "tophat_large_kernel": 11,
+      "morph_grad_kernel": 3,
+      "safety_buffer_kernel": 7,
+      "safety_buffer_iterations": 2,
+      "min_component_area": 50,
+      "tophat_thresh_small": 25,
+      "tophat_thresh_large": 20,
+      "morph_grad_thresh": 35,
+      "test_precision": 70.21,
+      "test_recall": 71.23,
+      "test_f1": 70.71,
+      "test_iou": 54.69
+    },
+    "conservative": {
+      "method": "oracle_multiscale",
+      "tophat_small_kernel": 7,
+      "tophat_large_kernel": 15,
+      "morph_grad_kernel": 3,
+      "safety_buffer_kernel": 7,
+      "safety_buffer_iterations": 2,
+      "min_component_area": 100,
+      "tophat_thresh_small": 25,
+      "tophat_thresh_large": 20,
+      "morph_grad_thresh": 35,
+      "test_precision": 62.64,
+      "test_recall": 78.9,
+      "test_f1": 69.83,
+      "test_iou": 53.65
+    },
+    "precision": {
+      "method": "oracle_core_only",
+      "tophat_small_kernel": 7,
+      "tophat_large_kernel": null,
+      "morph_grad_kernel": 3,
+      "safety_buffer_kernel": 9,
+      "safety_buffer_iterations": 2,
+      "min_component_area": 100,
+      "tophat_thresh_small": 25,
+      "tophat_thresh_large": null,
+      "morph_grad_thresh": 35,
+      "test_precision": 75.39,
+      "test_recall": 63.96,
+      "test_f1": 69.21,
+      "test_iou": 52.91
+    }
+  }
+}
