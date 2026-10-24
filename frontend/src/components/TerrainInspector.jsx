@@ -23,6 +23,7 @@
 import { useRef, useEffect, useState, useMemo, useCallback } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
+import useStore from '../store';
 import { TERRAIN_SIZE, getObservationWorldSpan, worldToU, worldToV, pxToWorldX, pxToWorldZ } from '../types';
 
 // ─── Shared coordinate helpers (same as TerrainViewport) ─────────────────────
